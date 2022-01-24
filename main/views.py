@@ -5,6 +5,12 @@ from django import forms
 
 class MessageForm(forms.Form):
     msg = forms.CharField(widget=forms.Textarea(attrs={'placeholder': "Input greetings ..."}))
+    start_x = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden',
+                                                            'id': 'start_x',
+                                                            'value': 50}))
+    start_y = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden',
+                                                            'id': 'start_y',
+                                                            'value': 50}))
 
 
 def greet(request):
@@ -12,11 +18,21 @@ def greet(request):
         form = MessageForm(request.POST)
         if form.is_valid():
             msg = f'{form.cleaned_data["msg"]}'
-            return render(request, 'main/1.html', {'data': msg})
+            start_x = form.cleaned_data["start_x"]
+            start_y = form.cleaned_data["start_y"]
+            return render(request, 'main/1.html', {'data': [msg, start_x, start_y]})
         else:
             return render(request, 'main/index.html', {'form': form})
     return render(request, 'main/index.html', {'form': MessageForm()})
-
+# def greet(request):
+#     if request.method == "POST":
+#         form = MessageForm(request.POST)
+#         if form.is_valid():
+#             msg = f'{form.cleaned_data["msg"]}'
+#             return render(request, 'main/1.html', {'data': msg})
+#         else:
+#             return render(request, 'main/index.html', {'form': form})
+#     return render(request, 'main/index.html', {'form': MessageForm()})
 
 def write_text(path, start, finish, font_path, text):
     with Image.open(path) as image:

@@ -1,3 +1,7 @@
 {% load static%}
 
-<p>{{data}}</p>
+{% for item in data %}
+<p>{{ item }}</p>
+{% endfor%}
+
+<!--<p>{{data}}</p>-->
