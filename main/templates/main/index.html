@@ -10,9 +10,6 @@
 </head>
 <body>
 <div class="top">
-
-  <form method="POST" action="{% url 'index' %}">
-    {% csrf_token %}
       <ul>
     <li>
       <p>Choose picture or upload yours</p>
@@ -30,15 +27,20 @@
       <p>Save a postcard</p>
     </li>
   </ul>
+<div>
+  <form method="POST" action="{% url 'greet' %}">
+    {% csrf_token %}
     {% for field in form %}
       {{ field }}
     {% endfor %}
 <!--    <textarea placeholder="Input greetings ..."></textarea>-->
     <input type="submit" value="Greet" id="greet_btn">
-    <input type="submit" value="Save" id="save_btn">
-    <input type="submit" value="Load your picture" id="load_btn">
   </form>
+      <input type="submit" value="Save" id="save_btn">
+    <input type="submit" value="Load your picture" id="load_btn">
+  </div>
 </div>
+
 <div class="container">
   <div
       class="slide"

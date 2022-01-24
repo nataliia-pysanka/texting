@@ -64,16 +64,16 @@ textarea {
 
 }
 
-#form {
+#form {/*
 width: 100%;
 padding: 0 20px 0 0;
-
+*/
 }
 
 .top {
   width: 20%;
-  height: 80vh;
-  display: flex;
+  height: 80vh;/*
+  display: flex;*/
   padding: 0 12px 0 30px;
 }
 
@@ -96,4 +96,3 @@ color:white;
 font-size: 12px;
 }
 
-textarea.
