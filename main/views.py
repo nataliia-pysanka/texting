@@ -1,8 +1,21 @@
 from django.shortcuts import render
+from django import forms
+
+
+class MessageForm(forms.Form):
+    # msg = forms.Textarea()
+    msg = forms.CharField(widget=forms.Textarea(attrs={'placeholder': "Input greetings ..."}))
 
 
 def index(request):
-    return render(request, 'main/index.html', {})
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            msg = f'{form.cleaned_data["msg"]}'
+            return render(request, 'main/1.html', {'data': msg})
+        else:
+            return render(request, 'main/index.html', {'form': form})
+    return render(request, 'main/index.html', {'form': MessageForm()})
 
 
 # from PIL import Image, ImageDraw, ImageFont

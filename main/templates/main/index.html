@@ -1,26 +1,79 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
 
-<html>
-    <head>
-        <title>Make comics</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-<!--        <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" >-->
-<!--        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" type="text/css">-->
-    </head>
-    <body>
-        <div class="page-header">
-            <h1><a href="">Nataly's narration</a></h1>
-            <h4 >about IMDB top movies</h4>
-        </div>
+  <title>Greetings</title>
+</head>
+<body>
+<div class="top">
 
-        <div class="content container">
-            <div class="row">
-                <div class="col-md-8">
-
-                </div>
-            </div>
+  <form method="POST" action="{% url 'index' %}">
+    {% csrf_token %}
+      <ul>
+    <li>
+      <p>Choose picture or upload yours</p>
+    </li>
+    <li>
+      <p>Input greetings</p>
+    </li>
+    <li>
+      <p>Take a box on the picture</p>
+    </li>
+    <li>
+      <p>Press "Greet"</p>
+    </li>
+        <li>
+      <p>Save a postcard</p>
+    </li>
+  </ul>
+    {% for field in form %}
+      {{ field }}
+    {% endfor %}
+<!--    <textarea placeholder="Input greetings ..."></textarea>-->
+    <input type="submit" value="Greet" id="greet_btn">
+    <input type="submit" value="Save" id="save_btn">
+    <input type="submit" value="Load your picture" id="load_btn">
+  </form>
 </div>
-    </body>
+<div class="container">
+  <div
+      class="slide"
+      style="background-image: url({% static '/images/photo-1610483041998-108421c1a4dc.jpeg' %});"
+  >
+    <h3>Stockholm, Sweden</h3>
+  </div>
+  <div
+      class="slide"
+      style="background-image: url({% static '/images/photo-1513635269975-59663e0ac1ad.jpeg' %});"
+  >
+    <h3>London, United Kingdom</h3>
+  </div>
+  <div
+      class="slide"
+      style="background-image: url({% static '/images/photo-1547566420-c0036b49cb8d.jpeg' %});"
+  >
+    <h3>Paris, France</h3>
+  </div>
+  <div
+      class="slide"
+      style="background-image: url({% static '/images/photo-1630933868840-1e9299a5b8dd.jpeg' %});"
+  >
+    <h3>Athens, Greece</h3>
+  </div>
+  <div
+      class="slide"
+      style="background-image: url({% static '/images/photo-1523906834658-6e24ef2386f9.jpeg' %});"
+  >
+    <h3>Venezia, Italy</h3>
+  </div>
+</div>
+
+<script src="{% static 'js/app.js' %}"></script>
+
+</body>
 </html>
+
