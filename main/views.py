@@ -2,15 +2,21 @@ from PIL import Image, ImageDraw, ImageFont
 from django.shortcuts import render
 from django import forms
 
+font_path = "main/fonts/Noteworthy.ttc"
+
 
 class MessageForm(forms.Form):
     msg = forms.CharField(widget=forms.Textarea(attrs={'placeholder': "Input greetings ..."}))
     start_x = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden',
-                                                            'id': 'start_x',
-                                                            'value': 50}))
+                                                            'id': 'start_x'}))
     start_y = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden',
-                                                            'id': 'start_y',
-                                                            'value': 50}))
+                                                            'id': 'start_y'}))
+    width = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden',
+                                                          'id': 'width'}))
+    height = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden',
+                                                          'id': 'height'}))
+    image_path = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden',
+                                                          'id': 'img'}))
 
 
 def greet(request):
@@ -18,51 +24,47 @@ def greet(request):
         form = MessageForm(request.POST)
         if form.is_valid():
             msg = f'{form.cleaned_data["msg"]}'
-            start_x = form.cleaned_data["start_x"]
-            start_y = form.cleaned_data["start_y"]
-            return render(request, 'main/1.html', {'data': [msg, start_x, start_y]})
+            start_x = float(form.cleaned_data["start_x"])
+            start_y = float(form.cleaned_data["start_y"])
+            width = float(form.cleaned_data["width"])
+            height = float(form.cleaned_data["height"])
+            image_path = 'static/images/' + form.cleaned_data["image_path"]
+            write_text(image_path, (start_x, start_y), width, height, font_path, msg)
+            return render(request, 'main/1.html', {})
         else:
             return render(request, 'main/index.html', {'form': form})
     return render(request, 'main/index.html', {'form': MessageForm()})
-# def greet(request):
-#     if request.method == "POST":
-#         form = MessageForm(request.POST)
-#         if form.is_valid():
-#             msg = f'{form.cleaned_data["msg"]}'
-#             return render(request, 'main/1.html', {'data': msg})
-#         else:
-#             return render(request, 'main/index.html', {'form': form})
-#     return render(request, 'main/index.html', {'form': MessageForm()})
 
-def write_text(path, start, finish, font_path, text):
+
+def write_text(path, start, w_width, w_height, font_path, text):
     with Image.open(path) as image:
+        y_koef = image.height / w_height
+        x_koef = image.width / w_width
         word = text.split(' ')
-        w_width = finish[0] - start[0]
-        w_height = finish[1] - start[1]
         for size in range(8, 25):
             index = 0
             font = ImageFont.truetype(font_path, size=size)
             y = font.getsize(font_path)[1]
             while index < len(word):
                 buffer_size = 0
-                while buffer_size <= w_width:
+                while buffer_size <= (w_width * x_koef):
                     buffer_size += len(word[index]) + 1
                     index += 1
                     if index == len(word):
                         break
                 y += (size * 1.5)
-            if y > w_height:
+            if y > (w_height * y_koef):
                 size -= 1
                 break
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype(font_path, size=size)
 
         index = 0
-        x = start[0]
-        y = start[1]
+        x = start[0] * x_koef
+        y = start[1] * y_koef
         while index < len(word):
             buffer = ''
-            while font.getsize(buffer)[0] <= w_width:
+            while font.getsize(buffer)[0] <= (w_width * x_koef):
                 buffer = buffer + word[index] + ' '
                 index += 1
                 if index == len(word):
@@ -70,7 +72,8 @@ def write_text(path, start, finish, font_path, text):
             draw.text((x, y), text=buffer, fill=0, font=font)
             y += (size * 1.5)
 
-        # image.save(out_file)
+        image.save('static/images/new.jpeg')
+        return True
 
 
 # def write_text(path, text):

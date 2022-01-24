@@ -89,10 +89,16 @@ input[type=button], input[type=submit], input[type=reset] {
 }
 
 #load_btn {
-bottom: 0;
-}
-ul{
-color:white;
-font-size: 12px;
+    bottom: 0;
 }
 
+ul{
+    color:white;
+    font-size: 12px;
+}
+
+.blue_div {/*
+    background-color = '#87CEFA';
+    opacity = '0';*/
+    z-index: 99999;
+}
