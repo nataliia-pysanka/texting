@@ -1,4 +1,10 @@
 from django.shortcuts import render
+
+
+def index(request):
+    return render(request, 'main/index.html', {})
+
+
 # from PIL import Image, ImageDraw, ImageFont
 #
 #
