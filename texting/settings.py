@@ -12,12 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
-
-db_from_env = dj_database_url.config(conn_max_age=500)
-
-DATABASES['default'].update(db_from_env)
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-m!ci-bepca###*i&40q5x*e_&+^29(u9n@x%jpsvr)sj6v_9@m'
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
+SECRET_KEY = 'django-insecure-m!ci-bepca###*i&40q5x*e_&+^29(u9n@x%jpsvr)sj6v_9@m'
+# SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = True
+# DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 ALLOWED_HOSTS = ['*']
 
 
@@ -83,15 +77,18 @@ WSGI_APPLICATION = 'texting.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#                 'NAME': 'text_db',
-#                 'USER': 'text_admin',
-#                 'PASSWORD': 'text_admin_24_01_22',
-#                 'HOST': '127.0.0.1',
-#                 'PORT': '5432', }
-# }
+DATABASES = {
+    # 'default': {}
+    'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': 'text_db',
+                'USER': 'text_admin',
+                'PASSWORD': 'text_admin_24_01_22',
+                'HOST': '127.0.0.1',
+                'PORT': '5432', }
+}
+# db_from_env = dj_database_url.config(conn_max_age=500)
 
+# DATABASES['default'].update(db_from_env)db_from_env
 
 
 # Password validation
