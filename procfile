@@ -1,0 +1,1 @@
+web: gunicorn make-greet.wsgi --log-file -
