@@ -1,8 +1,25 @@
-{% load static%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
 
-<!--{% for item in data %}-->
-<!--<p>{{ item }}</p>-->
-<!--{% endfor%}-->
-<!--<p>{{data}}</p>-->
-<!--<p>{{data}}</p>-->
-<div style="background-image: url({% static 'images/new.jpeg' %})"></div>
+  <title>Greetings</title>
+</head>
+<body>
+
+<div class="container">
+<div class="slide"
+      style="background-image: url({% static '/images/new.jpeg' %});"
+  >
+  </div>
+</div>
+
+
+</body>
+</html>
+
+
+
